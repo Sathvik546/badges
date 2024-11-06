@@ -1,0 +1,60 @@
+import random
+
+# List of words to choose from
+words = ["python", "hangman", "computer", "science", "programming"]
+
+# Function to choose a random word
+def get_random_word(words):
+    return random.choice(words)
+
+# Function to display the current state of the word
+def display_word(word, guessed_letters):
+    display = ""
+    for letter in word:
+        if letter in guessed_letters:
+            display += letter
+        else:
+            display += "_"
+    return display
+
+# Main Hangman function
+def play_hangman():
+    word = get_random_word(words)
+    guessed_letters = set()  # To keep track of guessed letters
+    attempts = 6  # Number of allowed incorrect attempts
+
+    print("Welcome to Hangman!")
+
+    while attempts > 0:
+        print(f"\nWord: {display_word(word, guessed_letters)}")
+        print(f"Guesses left: {attempts}")
+        print(f"Guessed letters: {', '.join(guessed_letters)}")
+
+        guess = input("Guess a letter: ").lower()
+
+        # Check if the guess is a single alphabet letter
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please guess a single letter.")
+            continue
+
+        if guess in guessed_letters:
+            print("You already guessed that letter.")
+            continue
+
+        guessed_letters.add(guess)
+
+        if guess in word:
+            print("Good guess!")
+        else:
+            print("Wrong guess.")
+            attempts -= 1  # Decrement attempts on incorrect guess
+
+        # Check if the player has guessed all letters
+        if all(letter in guessed_letters for letter in word):
+            print(f"\nCongratulations! You guessed the word: {word}")
+            break
+    else:
+        print(f"\nGame over! The word was: {word}")
+
+# Start the game
+play_hangman()
