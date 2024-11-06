@@ -1,0 +1,29 @@
+# Depth-First Search in Python
+
+# Define the graph as an adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+# DFS function
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = set()  # Set to keep track of visited nodes
+
+    visited.add(start)  # Mark the start node as visited
+    print(start)  # Print the current node
+
+    # Explore all adjacent nodes
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)  # Recursive call for unvisited neighbors
+
+    return visited
+
+# Run DFS
+visited_nodes = dfs(graph, 'A')
